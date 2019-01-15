@@ -20,13 +20,13 @@ Authorization: Auth String
 
 #### 请求参数
 
-名称|类型|必选|描述
----|---|---|---
-prefix|string|否|前缀匹配，用来规定返回的文件前缀地址
-delimiter|string|否|定界符为一个符号，如果有 Prefix，则将 Prefix 到 delimiter 之间的相同路径归为一类，定义为 Common Prefix，然后列出所有 Common Prefix。如果没有 Prefix，则从路径起点开始
-encoding-type|string|否|规定返回值的编码方式，可选值：url
-marker|string|否|默认以 UTF-8 二进制顺序列出条目，所有列出条目从 marker 开始
-max-keys|string|否|单次返回最大的条目数量，默认 1000
+| 名称          | 类型   | 必选 | 描述                                                         |
+| ------------- | ------ | ---- | ------------------------------------------------------------ |
+| prefix        | string | 否   | 用于指定返回对象名所拥有的前缀字符串                         |
+| delimiter     | string | 否   | 定界符为一个分组对象名的字符，如果有 Prefix，则将 Prefix 到 delimiter 第一次出现之间的路径归为一类，称之为 CommonPrefixs。如果未指定 Prefix，则从路径起点开始 |
+| encoding-type | string | 否   | 规定该请求响应的编码方式，可选值：url                        |
+| marker        | string | 否   | 默认以 UTF-8 二进制顺序列出条目，所有列出条目从 marker 开始  |
+| max-keys      | string | 否   | 单次返回最大的条目数量，可指定小于 1000 的数值，默认为 1000 条 |
 
 ### 请求体
 该请求请求体为空。
@@ -70,47 +70,47 @@ max-keys|string|否|单次返回最大的条目数量，默认 1000
 
 具体的数据描述如下：
 
-节点名称（关键字）|父节点|描述|类型|必选
----|---|---|---|---
-ListBucketResult|无|保存 Get Bucket 请求结果的所有信息|Container|是
+| 节点名称（关键字） | 父节点 | 描述                               | 类型      | 必选 |
+| ------------------ | ------ | ---------------------------------- | --------- | ---- |
+| ListBucketResult   | 无     | 保存 Get Bucket 请求结果的所有信息 | Container | 是   |
 
 Container 节点 ListBucketResult 的内容：
 
-节点名称（关键字）|父节点|描述|类型|必选
----|---|---|---|---
-Name|ListBucketResult|说明 Bucket 的信息|string|是
-Encoding-Type|ListBucketResult|编码格式|string|是
-Prefix|ListBucketResult|前缀匹配，用来规定响应请求返回的文件前缀地址|string|是
-Marker|ListBucketResult|默认以 UTF-8 二进制顺序列出条目，所有列出条目从 marker 开始|string|是
-MaxKeys|ListBucketResult|单次响应请求内返回结果的最大的条目数量|string|是
-IsTruncated|ListBucketResult|响应请求条目是否被截断，布尔值：true，false|boolean|是
-NextMarker|ListBucketResult|假如返回条目被截断，则返回 NextMarker 就是下一个条目的起点|string|是
-Contents|ListBucketResult|元数据信息|Container|是
-CommonPrefixes|ListBucketResult|将 Prefix 到 delimiter 之间的相同路径归为一类，定义为 Common Prefix|Container|是
+| 节点名称（关键字） | 父节点           | 描述                                                         | 类型      | 必选 |
+| ------------------ | ---------------- | ------------------------------------------------------------ | --------- | ---- |
+| Name               | ListBucketResult | Bucket 名称                                                  | string    | 是   |
+| Encoding-Type      | ListBucketResult | 响应的编码类型                                               | string    | 是   |
+| Prefix             | ListBucketResult | 前缀匹配，响应中对象的前缀字符串                             | string    | 是   |
+| Marker             | ListBucketResult | 默认以 UTF-8 二进制顺序列出条目，所有列出条目从 marker 开始  | string    | 是   |
+| MaxKeys            | ListBucketResult | 单次响应请求内返回结果的最大的条目数量                       | string    | 是   |
+| IsTruncated        | ListBucketResult | 响应请求条目是否被截断，布尔值：true，false                  | boolean   | 是   |
+| NextMarker         | ListBucketResult | 假如返回条目被截断，则返回 NextMarker 就是下一个条目的起点   | string    | 是   |
+| Contents           | ListBucketResult | 对象元数据信息                                               | Container | 是   |
+| CommonPrefixes     | ListBucketResult | 将 Prefix 到 delimiter 第一次出现之间的相同路径归为一类，定义为 Common Prefix | Container | 是   |
 Container 节点 Contents 的内容：
 
-节点名称（关键字）|父节点|描述|类型|必选
----|---|---|---|---
-Key|ListBucketResult.Contents|Object 的 Key|string|是
-LastModified|ListBucketResult.Contents|说明 Object 最后被修改时间|string|是
-ETag|ListBucketResult.Contents|文件的 MD-5 算法校验值|string|是
-Size|ListBucketResult.Contents|说明文件大小，单位是 Byte|string|是
-Owner|ListBucketResult.Contents|Bucket 持有者信息|Container|是
-StorageClass|ListBucketResult.Contents|Object 的存储级别，枚举值：STANDARD，STANDARD_IA，ARCHIVE|string|是
+| 节点名称（关键字） | 父节点                    | 描述                                                         | 类型      | 必选 |
+| ------------------ | ------------------------- | ------------------------------------------------------------ | --------- | ---- |
+| Key                | ListBucketResult.Contents | Object 的 Key                                                | string    | 是   |
+| LastModified       | ListBucketResult.Contents | Object 最后修改时间                                          | string    | 是   |
+| ETag               | ListBucketResult.Contents | 对象的唯一性标志，对于PUT Object上传的对象为其 MD-5 算法校验值 | string    | 是   |
+| Size               | ListBucketResult.Contents | 对象大小，单位是 Byte                                        | string    | 是   |
+| Owner              | ListBucketResult.Contents | Bucket 持有者信息                                            | Container | 是   |
+| StorageClass       | ListBucketResult.Contents | Object 的存储级别，枚举值：STANDARD，STANDARD_IA，ARCHIVE    | string    | 是   |
 Container 节点 Owner 的内容：
 
-节点名称（关键字）|父节点|描述|类型|必选
----|---|---|---|---
-ID|ListBucketResult.Contents.Owner|Bucket 的 AppID|string|是
+| 节点名称（关键字） | 父节点                          | 描述            | 类型   | 必选 |
+| ------------------ | ------------------------------- | --------------- | ------ | ---- |
+| ID                 | ListBucketResult.Contents.Owner | Bucket 的 AppID | string | 是   |
 Container 节点 CommonPrefixes 的内容：
 
-节点名称（关键字）|父节点|描述|类型|必选
----|---|---|---|---
-Prefix|ListBucketResult.CommonPrefixes|单条 Common 的前缀|string|是
+| 节点名称（关键字） | 父节点                          | 描述               | 类型   | 必选 |
+| ------------------ | ------------------------------- | ------------------ | ------ | ---- |
+| Prefix             | ListBucketResult.CommonPrefixes | 单条 Common 的前缀 | string | 是   |
 
 
 ### 错误码
-该请求操作无特殊错误信息，常见的错误信息请参见 [错误码](https://cloud.tencent.com/document/product/436/7730) 章节。
+该请求操作无特殊错误码，常见的错误码请参见 [错误码](https://cloud.tencent.com/document/product/436/7730) 章节。
 
 ## 实际案例
 
@@ -137,7 +137,7 @@ x-cos-request-id: NTg3NzRjY2VfYmRjMzVfMTc5M182MmIyNg==
 
 <?xml version='1.0' encoding='utf-8' ?>
 <ListBucketResult>
-    <Name>zuhaotestnorth-1251668577</Name>
+    <Name>example-1251668577</Name>
     <Encoding-Type>url</Encoding-Type>
     <Prefix>ela</Prefix>
     <Marker/>
@@ -187,5 +187,3 @@ x-cos-request-id: NTg3NzRjY2VfYmRjMzVfMTc5M182MmIyNg==
     </Contents>
 </ListBucketResult>
 ```
-
-
